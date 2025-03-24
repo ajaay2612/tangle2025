@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "Bangers";
+    src: url("/fonts/bangers/Bangers-Regular.ttf") format("truetype-variations");
+}
+
+/* Then update your theme */
+@theme {
+    --font-bangers: "Bangers", "system-ui";
+
+    --text-MqSmall: min(max(0rem, 3.5vw),1rem);
+    --text-MqMedium: min(max(0rem, 4vw),1.2rem);
+    --text-MqLarge: min(max(0.5rem, 3vw),2rem);
+    --text-MqXLarge: min(max(0.7rem, 2vw),2.2rem);
+    /* --text-MqXXLarge: min(max(0.7rem, 1.8vw),1.9rem); */
+
+    /* color */
+    --color-pri: #fff;
+    --color-sec: #000;
+   
+    /* color end */
+
+    --breakpoint-xsm: 500px;
+    
+    --spacing-0hem: 0.5em;
+    --spacing-1em: 1em;
+    --spacing-1hem: 1.5em;
+    --spacing-2em: 2em;
+    --spacing-2hem: 2.5em;
+    --spacing-3em: 3em;
+    --spacing-3hem: 3.5em;
+    --spacing-4em: 4em;
+    --spacing-4hem: 4.5em;
+    --spacing-5em: 5em;
+    --spacing-5hem: 5.5em;
+    --spacing-6em: 6em;
+    --spacing-6hem: 6.5em;
+    --spacing-7em: 7em;
+    --spacing-7hem: 7.5em;
+    --spacing-8em: 8em;
+    --spacing-8hem: 8.5em;
+    --spacing-9em: 9em;
+    --spacing-9hem: 9.5em;
+    --spacing-10em: 10em;
+    --spacing-10hem: 10.5em;
+}
+
+
+html {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none;
+    @apply text-[5vw] xsm:text-[3.15vw] md:text-[1.98vw] lg:text-[1.15vw] xl:text-[0.99vw] 2xl:text-[0.905vw] ;
+}
+
+svg{
+    width:100%;
+    height:100%;
+}
+  
+
+body {
+    @apply bg-(--color-pri) text-(--color-sec) font-bangers
+}
+
+.sectionController{
+    @apply text-MqSmall md:text-MqMedium lg:text-MqLarge xl:text-MqXLarge ;
+}
+
+.displayNone{
+    @apply opacity-0 pointer-events-none;
+}
+
+.tanButton{
+    @apply hover:scale-[1.02] transition-transform cursor-pointer hover:opacity-85;
+}
+
