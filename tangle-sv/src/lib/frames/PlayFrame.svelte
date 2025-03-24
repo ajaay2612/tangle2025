@@ -1,48 +1,123 @@
 <script>
     import Header from "$lib/components/Header.svelte";
     import CurrentFrame from "$lib/stores/CurrentFrame";
-    import PostData from '$lib/stores/PostData';
+    import PostData from "$lib/stores/PostData";
 
-    $: postData = PostData;
+    import { checkTangleMatch } from "$lib/utils/checkTangleMatch";
 
-    function createTangledArrayWithTitles(rows, cols) {
-        return Array.from({ length: rows }, (_, index) => ({
-            title: index === rows - 1 ? 'Joker' : '',
-            data: Array.from({ length: cols }, () => "")
-        }));
-    }
+    import { onMount } from "svelte";
 
-    function checkCanPost() {
-        const allFilled = tangle.every(row =>   
-            row.title.trim() !== '' &&
-            row.data.every(cell => cell.trim() !== '')
-        );
-        return allFilled;
-        // $postData.canPost = allFilled;
-    }
+    let initialTangle = []
 
-    let prevTangle = null
-    $: if (tangle) {
-        if (prevTangle !== JSON.stringify(tangle)) {
-            $postData.canPost = checkCanPost();
-            $postData.tangle = tangle;
-            
-            prevTangle = JSON.stringify(tangle);
+    onMount(() => {
+        initialTangle = $PostData.tangle;
+    });
+
+   
+
+    function removeMatchedGroupFromShoeCards(group) {
+        // Flatten all remaining cards
+        const remainingCards = shoeCardsData.flat().filter(cell => !group.includes(cell));
+
+        // Recreate 4-item groups
+        shoeCardsData = [];
+        for (let i = 0; i < remainingCards.length; i += 4) {
+            shoeCardsData.push(remainingCards.slice(i, i + 4));
         }
+
     }
-    
+
+    function checkMatch(group, tangle) {
+        if (group.length > 4) {
+            alert("You can only select 4 cards at a time");
+            return;
+        }
+
+        if (group.length < 4) {
+            alert("You must select 4 cards");
+            return;
+        }
+
+        // console.log(group);
+
+        setTimeout(() => {
+            const result = checkTangleMatch(group, tangle);
+            // console.log(result);
+
+            if (result.matched) {
+                alert(`You have matched the group with ${result.title}`);
+
+                doneCards = [...doneCards, {data: group, title: result.title}];
+                // Remove matched group from shoe cards
+                removeMatchedGroupFromShoeCards(group);
+                
+            } else {
+                alert("No match found");
+            }
+
+            setTimeout(() => {
+                if(shoeCardsData.length === 1){
+                    doneCards = [...doneCards, {data: shoeCardsData[0], title: "joker"}];
+                    removeMatchedGroupFromShoeCards(shoeCardsData[0]);
+                    alert("You have matched all groups");
+                    $PostData.doneTangle = doneCards;
+                    console.log(JSON.stringify(doneCards));
+                    $CurrentFrame = "done";
+                }  
+            }, 500);
+
+            deselectAll();
+        }, 500);
+    }
+
+    function shuffleTangleData(tangle, data=false) {
+        // Combine all data from non-Joker rows
+        let allData = [];
+        if (data) {
+            allData = tangle.flatMap((row) => row.data);
+        }else{
+            allData = tangle.flat();
+        }
+
+        // Fisher-Yates (Knuth) shuffle algorithm
+        for (let i = allData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allData[i], allData[j]] = [allData[j], allData[i]];
+        }
+
+        // Create 4x4 groups
+        const groups = [];
+        for (let i = 0; i < allData.length; i += 4) {
+            groups.push(allData.slice(i, i + 4));
+        }
+
+        shoeCardsData = groups;
+        deselectAll()
+    }
+
+    function deselectAll() {
+        currentGroup = [];
+    }
+
+    let shoeCardsData = [];
+    let currentGroup = [];
+    let doneCards = [];
 
 
-    // Example usage
-    $: tangle = createTangledArrayWithTitles(4, 4);
-    $:console.log(JSON.stringify(tangle));
+    onMount(() => {
+        shuffleTangleData(initialTangle, true) ;
+        // console.log(shoeCardsData);
+    });
 
+
+  
 </script>
 
-<Header/>
-<div class="w-[85%] h-[calc(100%-4.5em)] pb-2em mt-[4.5em] overflow-auto mx-auto">
-
-    <div class="space-y-[0.5em]">
+<Header />
+<div
+    class="w-[85%] h-[calc(100%-4.5em)] pb-2em mt-[4.5em] overflow-auto mx-auto"
+>
+    <!-- <div class="space-y-[0.5em]">
         {#each tangle as row, i}
 
             <div class="relative bg-[#f0f0f0] space-y-[0.5em] p-[0.5em]">
@@ -63,6 +138,71 @@
 
 
         {/each}
+    </div> -->
+    <div class="space-y-[0.5em] p-[0.5em]">
+        {#if doneCards?.length > 0}
+            <div class="bg-red-100 space-y-[0.5em] p-[0.5em]">
+                {#each doneCards as row, i}
+                    <div class="relative space-y-[0.5em]">
+                        <p>{row.title}</p>
+                        <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
+                            {#each row.data as cell, j}
+                                <button
+                                    class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
+                                >
+                                    {cell}
+                                </button>
+                            {/each}
+                        </div>
+                    </div>
+                {/each}
+            </div>
+        {/if}
+
+
+        {#each shoeCardsData as row, i}
+            <div class="relative space-y-[0.5em]">
+                <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
+                    {#each row as cell, j}
+                        <button
+                            on:click={() => {
+                                if (currentGroup.includes(cell)) {
+                                    currentGroup = currentGroup.filter(
+                                        (item) => item !== cell,
+                                    );
+                                } else {
+                                    currentGroup = [...currentGroup, cell];
+                                }
+                            }}
+                            class:activeGroup={currentGroup.includes(cell)}
+                            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
+                        >
+                            {cell}
+                        </button>
+                    {/each}
+                </div>
+            </div>
+        {/each}
     </div>
 
+    <div class="flex justify-center gap-0hem mt-1em">
+        <button
+            on:click={()=> shuffleTangleData(shoeCardsData) }
+            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
+        >
+            shuffle
+        </button>
+        <button
+            on:click={deselectAll}
+            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
+        >
+            deselect all
+        </button>
+        <button
+            on:click={()=> checkMatch(currentGroup, initialTangle)}
+            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
+        >
+            submit
+        </button>
+    </div>
 </div>

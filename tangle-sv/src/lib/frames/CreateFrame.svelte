@@ -7,7 +7,7 @@
 
     function createTangledArrayWithTitles(rows, cols) {
         return Array.from({ length: rows }, (_, index) => ({
-            title: index === rows - 1 ? 'Joker' : '',
+            title: index === rows - 1 ? 'joker' : '',
             data: Array.from({ length: cols }, () => "")
         }));
     }

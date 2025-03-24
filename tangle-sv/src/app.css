@@ -77,3 +77,7 @@ body {
     @apply hover:scale-[1.02] transition-transform cursor-pointer hover:opacity-85;
 }
 
+.activeGroup{
+    @apply bg-[#000000] text-[#fff] ;
+}
+
