@@ -76,7 +76,7 @@
                                 {/if}
                                 <input 
                                 placeholder="{i != tangle.length-1 ? '' : 'joker'}"
-                                type="text" bind:value={cell} class="aspect-square xsm:aspect-auto cardsButton focus-within:relative w-full rounded-[0.4em] focus-within:outline-none bg-[#F5F6F3] px-[0.4em] text-center p-[0.3em]"/>
+                                type="text" bind:value={cell} class="aspect-[2/1.5] xsm:aspect-auto cardsButton focus-within:relative w-full rounded-[0.4em] focus-within:outline-none bg-[#F5F6F3] px-[0.4em] text-center p-[0.3em]"/>
                             </div>
                         {/each}
                     </div>

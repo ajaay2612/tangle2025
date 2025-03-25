@@ -64,7 +64,7 @@
                 console.log(doneCards)
 
                 if (doneCards.length == 3) {
-                    message = { text:"Yayy!! You have matched all groups, and found the jokers.", success: true }
+                    message = { text:"Untangled!!", success: true }
                     setTimeout(() => {
                         message = { text: "", success: true }
                     }, 2500);
@@ -214,20 +214,20 @@
     function getRandomMessage(success) {
         let messages = {
             success: [
-                "Great job! You found a perfect match!",
-                "Nice work! That’s a correct group!",
+                "Great job!",
+                "Nice work!",
                 "You’re on fire!!",
-                "Well played! Keep going!",
-                "Brilliant! That’s a perfect connection!",
-                "Awesome! You cracked the set!"
+                "Well played!",
+                "Brilliant!",
+                "Awesome!"
             ],
             wrong: [
-                "Oops! Those don’t seem to connect.",
-                "Not quite! Try again.",
-                "Hmm… that’s not a match. Keep thinking!",
-                "Almost there! Reconsider your choices.",
-                "That’s not it. Look for a stronger connection!",
-                "Nope! Keep searching for the right pattern!"
+                "Oops! ",
+                "Not quite!!",
+                "Hmm… that’s not ..",
+                "Almost there!",
+                "That’s not it.",
+                "Nope!"
             ]
         }
 
@@ -240,18 +240,18 @@
 </script>
 
 {#if message?.success && message.text}
-    <div transition:scale={{start:0.8}} class=" flex  justify-center items-center gap-[0.5em] shadow border-tert bg-green-100 text-[0.7em] pl-[0.8em] pr-[1.5em] rounded-full py-[0.1em]  capitalize font-medium fixed top-[1.5em] left-1/2 -translate-x-1/2">
+    <div transition:scale={{start:0.8}} class="   flex  justify-center items-center gap-[0.5em] shadow border-tert bg-green-100 text-[0.7em] pl-[0.8em] pr-[1.5em] rounded-full py-[0.1em]  capitalize font-medium fixed top-[1.5em] left-1/2 -translate-x-1/2">
         
-        <div class="w-[1em]">
+        <div class="w-[1.2em] xsm:w-[1em]">
             <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 -960 960 960"  fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
         </div>
         <div class="text-[0.9em] whitespace-nowrap">{message.text}</div>
     </div>
 {/if}
 {#if !message?.success && message.text}
-    <div transition:scale={{start:0.8}} class="text-[#1f0707] flex justify-center items-center gap-[0.5em] shadow border-[#ff3a3a] bg-red-100 text-[0.7em] pl-[0.8em] pr-[1.5em] rounded-full py-[0.1em]  capitalize font-medium fixed top-[1.5em] left-1/2 -translate-x-1/2">
+    <div transition:scale={{start:0.8}} class="  text-[#1f0707] flex justify-center items-center gap-[0.5em] shadow border-[#ff3a3a] bg-red-100 text-[0.7em] pl-[0.8em] pr-[1.5em] rounded-full py-[0.1em]  capitalize font-medium fixed top-[1.5em] left-1/2 -translate-x-1/2">
         
-        <div class="w-[1em]">
+        <div class="w-[1.2em] xsm:w-[1em]">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"  fill="currentColor"><path d="M330-120 120-330v-300l210-210h300l210 210v300L630-120H330Zm36-190 114-114 114 114 56-56-114-114 114-114-56-56-114 114-114-114-56 56 114 114-114 114 56 56Zm-2 110h232l164-164v-232L596-760H364L200-596v232l164 164Zm116-280Z"/></svg>
         </div>
         <div class="text-[0.9em] whitespace-nowrap">{message.text}</div>

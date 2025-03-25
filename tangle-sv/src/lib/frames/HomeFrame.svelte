@@ -33,7 +33,7 @@
 <div class="text-[0.95em] flex flex-col justify-center gap-2em items-center">
     <div class="space-y-[0.4em]">
         <Logo/>
-        <p class="font-montserrat-italic font-normal italic text-[0.8em]">Find the patterns. Untangle the trickery.</p>
+        <p class="font-montserrat-italic font-normal italic text-center text-[0.8em]">Find the patterns. Untangle the trickery.</p>
     </div>
     <div class="space-y-[0.6em]">
         <div class="flex justify-center gap-[0.6em]">

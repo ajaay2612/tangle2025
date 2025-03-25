@@ -80,6 +80,9 @@ Devvit.addCustomPostType({
 
                         await setUserPostData();
 
+                        webView.postMessage({
+                            type: 'refresh'
+                        });
 
                         break;
 

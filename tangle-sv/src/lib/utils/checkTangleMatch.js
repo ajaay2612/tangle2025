@@ -1,6 +1,6 @@
 export function checkTangleMatch(group, tangle) {
     for (const row of tangle) {
-        if (row.title === "Joker") continue;
+        if (row.title === "joker") continue;
 
         // Convert both current group and row data to uppercase
         const normalizedGroup = group.map((item) =>

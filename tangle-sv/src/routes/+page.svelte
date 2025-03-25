@@ -65,6 +65,8 @@
                 isReinit = false;
                 $ShowLoader = false;
 
+            }else if (message.type === 'refresh'){
+                refreshData()
             }
         }
     };
