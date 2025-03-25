@@ -28,7 +28,7 @@
                 {#each $PostData?.doneTangle as row, i}
                     <div class="relative space-y-[0.5em]">
                         <p>{row.title}</p>
-                        <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
+                        <div class="grid grid-cols-4 gap-[0.5em]">
                             {#each row.data as cell, j}
                                 <button
                                     class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
@@ -46,7 +46,7 @@
 
 
 
-<div class="w-[70%] flex justify-center items-center h-full  mx-auto">
+<div class="w-[90%] xsm:w-[70%] flex justify-center items-center h-full  mx-auto">
 
 
     <div class="space-y-[0.8em] mt-1em w-full">
@@ -81,16 +81,16 @@
                 </div>
             {/if}          
         </div>
-        <div class="flex justify-center gap-0hem mt-1em">
+        <div class="px-1em xsm:p-0 flex-col xsm:flex-row  flex justify-center gap-0hem mt-1em">
             <button
                 on:click={()=> $CurrentFrame = "create"}
-                class=" monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                class=" monotonButton cursor-pointer border border-black rounded-full py-[0.4em] xsm:py-[0.2em] px-[1.18em] block font-montserrat font-normal"
                 >
                 <p class="text-[0.55em] capitalize">Create a Tangle</p>
             </button>
             <button
                 on:click={playNext}
-                class=" monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                class=" monotonButton cursor-pointer border border-black rounded-full py-[0.4em] xsm:py-[0.2em] px-[1.18em] block font-montserrat font-normal"
             >
                 <p class="text-[0.55em] capitalize">play another tangle</p>
             </button>

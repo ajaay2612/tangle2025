@@ -170,6 +170,7 @@
 
     // timer
 
+    
     let timer = 0;
     let timerInterval;
     let isTimerRunning = false;
@@ -261,7 +262,7 @@
 
 
 
-<div class="w-[70%] flex justify-center items-center h-full  mx-auto">
+<div class="w-[95%] xsm:w-[70%] flex justify-center items-center h-full  mx-auto">
 
 
     <div class="space-y-[0.8em] mt-1em w-full">
@@ -296,7 +297,7 @@
             <!-- {/if} -->
             {#each shoeCardsData as row, i}
                 <div  class="relative space-y-[0.5em]">
-                    <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
+                    <div class="grid grid-cols-4 gap-[0.5em]">
                         {#each row as cell, j (cell)}
                             <button
                                 out:scale
@@ -312,7 +313,7 @@
                                 }}
                                 class:activeGroup={currentGroup.includes(cell)}
                                 class:shakeGroup={currentGroup.includes(cell) && showShake}
-                                class=" cardsButton transition-colors focus-within:outline-none text-[0.9em] bg-[#F2F6EF] rounded-[0.5em] w-full text-center aspect-[3/1.4]"
+                                class=" tracking-tighter  xsm:tracking-normal cardsButton transition-colors focus-within:outline-none text-[0.8em] xsm:text-[0.9em] bg-[#F2F6EF] rounded-[0.5em] w-full text-center aspect-square xsm:aspect-[3/1.4]"
                             >
                                 {cell}
                             </button>
@@ -322,12 +323,12 @@
             {/each}
         </div>
         <div class="flex justify-center gap-0hem mt-1em">
-            <button
+            <!-- <button
                 on:click={()=> shuffleTangleData(shoeCardsData) }
                 class="monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
             >
                 <p class="text-[0.55em] capitalize">shuffle</p>
-            </button>
+            </button> -->
             <button
                 on:click={deselectAll}
                 class="monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"

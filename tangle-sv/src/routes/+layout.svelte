@@ -3,5 +3,5 @@
 </script>
 
 <div class="sectionController">
-    <slot/>
+    <div class="text-[1.7em] xsm:text-[1em]"><slot/></div>
 </div>

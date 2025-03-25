@@ -40,7 +40,7 @@
 </script>
 
 <Header/>
-<div class="w-[70%] flex justify-center items-center h-full  mx-auto">
+<div class="w-[90%] xsm:w-[70%] flex justify-center items-center h-full  mx-auto">
 
     <div class="space-y-[0.8em] mt-1em">
         <p class="text-center font-montserrat-italic font-normal italic text-[0.62em]">Craft Three Categories and a Set of Jokers</p>
@@ -57,7 +57,7 @@
                         </div>
                     {/if}
         
-                    <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
+                    <div class="grid grid-cols-4 gap-[0.5em]">
                         {#each row.data as cell, j}
                             <div class="w-auto relative">
                                 {#if i != tangle.length-1}
@@ -76,7 +76,7 @@
                                 {/if}
                                 <input 
                                 placeholder="{i != tangle.length-1 ? '' : 'joker'}"
-                                type="text" bind:value={cell} class="cardsButton focus-within:relative w-full rounded-[0.4em] focus-within:outline-none bg-[#F5F6F3] px-[0.4em] text-center p-[0.3em]"/>
+                                type="text" bind:value={cell} class="aspect-square xsm:aspect-auto cardsButton focus-within:relative w-full rounded-[0.4em] focus-within:outline-none bg-[#F5F6F3] px-[0.4em] text-center p-[0.3em]"/>
                             </div>
                         {/each}
                     </div>

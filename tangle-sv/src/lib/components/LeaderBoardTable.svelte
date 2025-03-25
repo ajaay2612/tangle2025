@@ -19,7 +19,7 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
-<div on:click|self={()=>showLeaderboard= false} class="w-[90%] h-[calc(85vh-4em)] mt-4em mx-auto text-[0.9em] xsm:text-[0.55em]  ">
+<div on:click|self={()=>showLeaderboard= false} class="w-[90%] h-[calc(85vh-4em)] mt-4em mx-auto text-[0.6em] xsm:text-[0.55em]  ">
         
     <div class="overflow-hidden bg-tert rounded-[0.3em] text-[1.38em] font-primary flex flex-col h-full justify-between">
         <div class="">
