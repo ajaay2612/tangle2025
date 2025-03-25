@@ -112,9 +112,15 @@
     let doneCards = [];
 
 
+
+
+
     onMount(() => {
         shuffleTangleData(initialTangle, true) ;
         // console.log(shoeCardsData);
+
+        // doneCards = [{"data":["PANDA","CROSSWORD","TUXEDO","OREO"],"title":"BLACK-AND-WHITETHINGS"}];
+        // shoeCardsData = []
     });
 
 
@@ -163,100 +169,81 @@
 
 
 
-<div
-    class="w-[85%] h-[calc(100%-4.5em)] pb-2em mt-[4.5em] overflow-auto mx-auto"
->
-
-    <div class="flex justify-center mb-4">
-        <p class="text-2xl font-bold">{formatTime(timer)}</p>
-    </div>
-
-    <!-- <div class="space-y-[0.5em]">
-        {#each tangle as row, i}
-
-            <div class="relative bg-[#f0f0f0] space-y-[0.5em] p-[0.5em]">
-                <p class="absolute top-[1em] right-1hem ">group {i+1 == 5? "joker" : i+1 }</p>
-                
-                {#if i != tangle.length-1}
-                    <input type="text" placeholder="title" bind:value={row.title} class="focus-within:outline-none border-b-2 px-[0.4em] p-[0.3em]"/>
-                {:else}
-                    <p class="px-[0.4em] text-left p-[0.3em]">joker words</p>
-                {/if}
-                
-                <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
-                    {#each row.data as cell, j}
-                        <input type="text" bind:value={cell} class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"/>
-                    {/each}
-                </div>
-            </div>
+<div class="w-[70%] flex justify-center items-center h-full  mx-auto">
 
 
-        {/each}
-    </div> -->
-    <div class="space-y-[0.5em] p-[0.5em]">
-        {#if doneCards?.length > 0}
-            <div class="bg-red-100 space-y-[0.5em] p-[0.5em]">
-                {#each doneCards as row, i}
-                    <div class="relative space-y-[0.5em]">
-                        <p>{row.title}</p>
-                        <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
-                            {#each row.data as cell, j}
-                                <button
-                                    class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-                                >
-                                    {cell}
-                                </button>
-                            {/each}
+    <div class="space-y-[0.8em] mt-1em w-full">
+        <div class="text-center   text-[0.62em]">
+            <p class="font-medium font-montserrat ">{formatTime(timer)}</p>
+            <p class="font-normal  font-montserrat-italic">Find the Three Categories and Spot the Jokers</p>
+        </div>
+        <div class="text-[0.6em] space-y-[0.5em] p-[0.5em]">
+            {#if doneCards?.length > 0}
+                <div 
+                class="space-y-[0.5em]">
+                    {#each doneCards as row, i}
+                        <div 
+                        class="
+                        {i+1 == 1 ? 'bg-box-1' : i+1 == 2 ? 'bg-box-2' :  i+1 == 3 ? 'bg-box-3' : "bg-black text-white" }
+                        relative text-center rounded-[0.5em] pt-[0.9em] pb-[0.9em]">
+                            {#if row.title == "joker"}
+                                <div class="flex justify-center items-center gap-[0.5em]">
+                                    <img class="w-[1.7em] mb-[0.3em]" src="/images/joker.svg" alt="">
+                                    <p>JOKER CARDS</p>
+                                </div>
+                            {:else}
+                                <p>{row.title}</p>
+                            {/if}
+                            <div class="leading-[1.1em] font-normal">
+                                {row.data.join(", ")}
+                            </div>
                         </div>
-                    </div>
-                {/each}
-            </div>
-        {/if}
-
-
-        {#each shoeCardsData as row, i}
-            <div class="relative space-y-[0.5em]">
-                <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
-                    {#each row as cell, j}
-                        <button
-                            on:click={() => {
-                                if (currentGroup.includes(cell)) {
-                                    currentGroup = currentGroup.filter(
-                                        (item) => item !== cell,
-                                    );
-                                } else {
-                                    currentGroup = [...currentGroup, cell];
-                                }
-                            }}
-                            class:activeGroup={currentGroup.includes(cell)}
-                            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-                        >
-                            {cell}
-                        </button>
                     {/each}
                 </div>
-            </div>
-        {/each}
-    </div>
-
-    <div class="flex justify-center gap-0hem mt-1em">
-        <button
-            on:click={()=> shuffleTangleData(shoeCardsData) }
-            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-        >
-            shuffle
-        </button>
-        <button
-            on:click={deselectAll}
-            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-        >
-            deselect all
-        </button>
-        <button
-            on:click={()=> checkMatch(currentGroup, initialTangle)}
-            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-        >
-            submit
-        </button>
+            {/if}
+            {#each shoeCardsData as row, i}
+                <div class="relative space-y-[0.5em]">
+                    <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
+                        {#each row as cell, j}
+                            <button
+                                on:click={() => {
+                                    if (currentGroup.includes(cell)) {
+                                        currentGroup = currentGroup.filter(
+                                            (item) => item !== cell,
+                                        );
+                                    } else {
+                                        currentGroup = [...currentGroup, cell];
+                                    }
+                                }}
+                                class:activeGroup={currentGroup.includes(cell)}
+                                class="transition-colors focus-within:outline-none text-[0.9em] bg-[#F2F6EF] rounded-[0.5em] w-full text-center aspect-[3/1.4]"
+                            >
+                                {cell}
+                            </button>
+                        {/each}
+                    </div>
+                </div>
+            {/each}
+        </div>
+        <div class="flex justify-center gap-0hem mt-1em">
+            <button
+                on:click={()=> shuffleTangleData(shoeCardsData) }
+                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+            >
+                <p class="text-[0.55em] capitalize">shuffle</p>
+            </button>
+            <button
+                on:click={deselectAll}
+                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+            >
+                <p class="text-[0.55em] capitalize">deselect all</p>
+            </button>
+            <button
+                on:click={()=> checkMatch(currentGroup, initialTangle)}
+                class="cursor-pointer border bg-black text-white border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+            >
+                <p class="text-[0.55em] capitalize">submit</p>
+            </button>
+        </div>
     </div>
 </div>

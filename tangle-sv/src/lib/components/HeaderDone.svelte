@@ -2,7 +2,8 @@
     import CurrentFrame from "$lib/stores/CurrentFrame";
     import PostData from '$lib/stores/PostData';
     import { fade, scale } from "svelte/transition";
-
+    import Logo from "../components/Logo.svelte";
+    
     import LeaderBoard from "./leaderBoard.svelte";
     import { cubicOut } from "svelte/easing";
     let showLeaderboard = false;
@@ -14,12 +15,11 @@
     }
 </script>
 
+
 <div class="z-[599] fixed top-0 left-0 px-1em w-full ">
     <div class="flex justify-between items-center  p-1em">
-        <button on:click={()=>$CurrentFrame = "home"}
-        class="py-[0.4em] block tanButton">
-            Back
-        </button>
+        <div class="text-[0.5em]"><Logo/></div>
+
         <!-- svelte-ignore a11y_consider_explicit_label -->
         <button on:click={toggleLeaderboard}
         class="py-[0.4em] block tanButton">

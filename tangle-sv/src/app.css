@@ -1,13 +1,43 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: "Bangers";
-    src: url("/fonts/bangers/Bangers-Regular.ttf") format("truetype-variations");
+    font-family: "bgrot";
+    font-style: normal;
+    font-weight: 100 900;
+    /* Variable font weight range */
+    font-display: swap;
+    src: url("/fonts/bg/BricolageGrotesque-VariableFont_opsz,wdth\,wght.ttf") format("truetype-variations");
+}
+@font-face {
+    font-family: "montserrat italic";
+    font-style: italic;
+    font-weight: 100 900;
+    /* Variable font weight range */
+    font-display: swap;
+    src: url("/fonts/mont/Montserrat-Italic-VariableFont_wght.ttf") format("truetype-variations");
+}
+@font-face {
+    font-family: "montserrat";
+    font-style: normal;
+    font-weight: 100 900;
+    /* Variable font weight range */
+    font-display: swap;
+    src: url("/fonts/mont/Montserrat-VariableFont_wght.ttf") format("truetype-variations");
+}
+@font-face {
+    font-family: "bgrot";
+    font-style: normal;
+    font-weight: 100 900;
+    /* Variable font weight range */
+    font-display: swap;
+    src: url("/fonts/bg/BricolageGrotesque-VariableFont_opsz,wdth\,wght.ttf") format("truetype-variations");
 }
 
 /* Then update your theme */
 @theme {
-    --font-bangers: "Bangers", "system-ui";
+    --font-bgrot: "bgrot", "sans-serif";
+    --font-montserrat: "montserrat", "sans-serif";
+    --font-montserrat-italic: "montserrat italic", "sans-serif";
 
     --text-MqSmall: min(max(0rem, 3.5vw),1rem);
     --text-MqMedium: min(max(0rem, 4vw),1.2rem);
@@ -18,7 +48,13 @@
     /* color */
     --color-pri: #fff;
     --color-sec: #000;
-   
+    --color-tert: #C6FFA0;
+    
+    --color-box-1: #E4FFA0;
+    --color-box-2: #FFD4A0;
+    --color-box-3: #AEA0FF;
+    
+
     /* color end */
 
     --breakpoint-xsm: 500px;
@@ -62,7 +98,7 @@ svg{
   
 
 body {
-    @apply bg-(--color-pri) text-(--color-sec) font-bangers
+    @apply bg-(--color-pri) text-(--color-sec) font-bgrot font-bold
 }
 
 .sectionController{
@@ -81,3 +117,6 @@ body {
     @apply bg-[#000000] text-[#fff] ;
 }
 
+.activeRank{
+    @apply bg-[#000000] text-[#fff] ;
+}

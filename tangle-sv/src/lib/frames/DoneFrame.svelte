@@ -10,7 +10,7 @@
 </script>
 
 <HeaderDone />
-<div
+<!-- <div
     class="w-[85%] h-[calc(100%-4.5em)] pb-2em mt-[4.5em] overflow-auto mx-auto"
 >
     <div class="space-y-[0.5em] p-[0.5em]">
@@ -38,25 +38,56 @@
             </div>
         {/if}
     </div>
+</div> -->
 
-    <div class="flex justify-center gap-0hem mt-1em">
-        <!-- <button
-            on:click={()=> shuffleTangleData(shoeCardsData) }
-            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-        >
-            shuffle
-        </button>
-        <button
-            on:click={deselectAll}
-            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-        >
-            deselect all
-        </button>
-        <button
-            on:click={()=> checkMatch(currentGroup, initialTangle)}
-            class="focus-within:outline-none border-2 px-[0.4em] text-center p-[0.3em]"
-        >
-            submit
-        </button> -->
+
+
+<div class="w-[70%] flex justify-center items-center h-full  mx-auto">
+
+
+    <div class="space-y-[0.8em] mt-1em w-full">
+        <div class="text-center   text-[0.62em]">
+            <p class="font-normal  font-montserrat-italic">Solved In </p>
+            <p class="font-medium font-montserrat ">{$PostData?.doneTime}</p>
+        </div>
+        <div class="text-[0.6em] space-y-[0.5em] p-[0.5em]">
+            {#if $PostData?.doneTangle?.length  > 0}
+                <div 
+                class="space-y-[0.5em]">
+                    {#each $PostData?.doneTangle as row, i}
+                        <div 
+                        class="
+                        {i+1 == 1 ? 'bg-box-1' : i+1 == 2 ? 'bg-box-2' :  i+1 == 3 ? 'bg-box-3' : "bg-black text-white" }
+                        relative text-center rounded-[0.5em] pt-[0.9em] pb-[0.9em]">
+                            {#if row.title == "joker"}
+                                <div class="flex justify-center items-center gap-[0.5em]">
+                                    <img class="w-[1.7em] mb-[0.3em]" src="/images/joker.svg" alt="">
+                                    <p>JOKER CARDS</p>
+                                </div>
+                            {:else}
+                                <p>{row.title}</p>
+                            {/if}
+                            <div class="leading-[1.1em] font-normal">
+                                {row?.data?.join(", ")}
+                            </div>
+                        </div>
+                    {/each}
+                </div>
+            {/if}          
+        </div>
+        <div class="flex justify-center gap-0hem mt-1em">
+            <button
+                on:click={()=> $CurrentFrame = "create"}
+                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                >
+                <p class="text-[0.55em] capitalize">Create a Tangle</p>
+            </button>
+            <button
+                on:click={()=> {} }
+                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+            >
+                <p class="text-[0.55em] capitalize">play another tangle</p>
+            </button>
+        </div> 
     </div>
 </div>
