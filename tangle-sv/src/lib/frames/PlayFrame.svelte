@@ -2,10 +2,12 @@
     import HeaderPlay from "$lib/components/HeaderPlay.svelte";
     import CurrentFrame from "$lib/stores/CurrentFrame";
     import PostData from "$lib/stores/PostData";
+	import {flip} from 'svelte/animate';
 
     import { checkTangleMatch } from "$lib/utils/checkTangleMatch";
 
     import { onMount } from "svelte";
+    import { scale } from "svelte/transition";
 
     let initialTangle = []
 
@@ -29,12 +31,18 @@
 
     function checkMatch(group, tangle) {
         if (group.length > 4) {
-            alert("You can only select 4 cards at a time");
+            message = { text: "You can only select 4 cards at a time", success: false }
+            setTimeout(() => {
+                message = { text: "", success: true }
+            }, 2000);
             return;
         }
 
         if (group.length < 4) {
-            alert("You must select 4 cards");
+            message = { text: "You must select 4 cards", success: false }
+            setTimeout(() => {
+                message = { text: "", success: true }
+            }, 2000);
             return;
         }
 
@@ -45,14 +53,41 @@
             // console.log(result);
 
             if (result.matched) {
-                alert(`You have matched the group with ${result.title}`);
-
+                
+                
+                
                 doneCards = [...doneCards, {data: group, title: result.title}];
                 // Remove matched group from shoe cards
                 removeMatchedGroupFromShoeCards(group);
                 
+
+                console.log(doneCards)
+
+                if (doneCards.length == 3) {
+                    message = { text:"Yayy!! You have matched all groups, and found the jokers.", success: true }
+                    setTimeout(() => {
+                        message = { text: "", success: true }
+                    }, 5000);
+                }else{
+                    message = { text: getRandomMessage(true), success: true }
+                    setTimeout(() => {
+                        message = { text: "", success: true }
+                    }, 2000);
+
+                }
+
+                deselectAll();
             } else {
-                alert("No match found");
+                message = { text: getRandomMessage(false), success: false }
+                setTimeout(() => {
+                    message = { text: "", success: true }
+                }, 2000);
+
+                showShake = true
+                setTimeout(() => {
+                    deselectAll();
+                    showShake = false
+                }, 500);
             }
 
             setTimeout(() => {
@@ -60,7 +95,13 @@
                     stopTimer()
                     doneCards = [...doneCards, {data: shoeCardsData[0], title: "joker"}];
                     removeMatchedGroupFromShoeCards(shoeCardsData[0]);
-                    alert("You have matched all groups");
+                    
+                    // message = { text: "Yayy!! You have matched all groups, and jokers.", success: true }
+                    // setTimeout(() => {
+                    //     message = { text: "", success: true }
+                    // }, 2000);
+                    
+                    // alert("You have matched all groups");
                     $PostData.doneTangle = doneCards;
                     console.log(JSON.stringify(doneCards));
                     $PostData.doneTime = formatTime(totalTime);                    
@@ -70,12 +111,14 @@
                         data: { tangle: $PostData.doneTangle, doneTime: formatTime(totalTime) }
                     }, '*');
 
-                    $CurrentFrame = "done";
+                    setTimeout(() => {
+                        $CurrentFrame = "done";
+                    }, 5000);
                 }  
             }, 500);
 
-            deselectAll();
-        }, 500);
+            
+        }, 0);
     }
 
     function shuffleTangleData(tangle, data=false) {
@@ -162,8 +205,57 @@
         shuffleTangleData(initialTangle, true);
         startTimer(); // Start timer when component mounts
     });
+
+
+    // let message = { text: getRandomMessage(true), success: true };
+    let message = { text: "", success: true };
   
+    function getRandomMessage(success) {
+        let messages = {
+            success: [
+                "Great job! You found a perfect match!",
+                "Nice work! That’s a correct group!",
+                "You’re on fire!!",
+                "Well played! Keep going!",
+                "Brilliant! That’s a perfect connection!",
+                "Awesome! You cracked the set!"
+            ],
+            wrong: [
+                "Oops! Those don’t seem to connect.",
+                "Not quite! Try again.",
+                "Hmm… that’s not a match. Keep thinking!",
+                "Almost there! Reconsider your choices.",
+                "That’s not it. Look for a stronger connection!",
+                "Nope! Keep searching for the right pattern!"
+            ]
+        }
+
+        let messageType = success ? "success" : "wrong";
+        return messages[messageType][Math.floor(Math.random() * messages[messageType].length)];
+    };
+
+
+    let showShake = false
 </script>
+
+{#if message?.success && message.text}
+    <div transition:scale={{start:0.8}} class=" flex  justify-center items-center gap-[0.5em] shadow border-tert bg-green-100 text-[0.7em] pl-[0.8em] pr-[1.5em] rounded-full py-[0.1em]  capitalize font-medium fixed top-[1.5em] left-1/2 -translate-x-1/2">
+        
+        <div class="w-[1em]">
+            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 -960 960 960"  fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+        </div>
+        <div class="text-[0.9em] whitespace-nowrap">{message.text}</div>
+    </div>
+{/if}
+{#if !message?.success && message.text}
+    <div transition:scale={{start:0.8}} class="text-[#1f0707] flex justify-center items-center gap-[0.5em] shadow border-[#ff3a3a] bg-red-100 text-[0.7em] pl-[0.8em] pr-[1.5em] rounded-full py-[0.1em]  capitalize font-medium fixed top-[1.5em] left-1/2 -translate-x-1/2">
+        
+        <div class="w-[1em]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"  fill="currentColor"><path d="M330-120 120-330v-300l210-210h300l210 210v300L630-120H330Zm36-190 114-114 114 114 56-56-114-114 114-114-56-56-114 114-114-114-56 56 114 114-114 114 56 56Zm-2 110h232l164-164v-232L596-760H364L200-596v232l164 164Zm116-280Z"/></svg>
+        </div>
+        <div class="text-[0.9em] whitespace-nowrap">{message.text}</div>
+    </div>
+{/if}
 
 <HeaderPlay />
 
@@ -178,11 +270,12 @@
             <p class="font-normal  font-montserrat-italic">Find the Three Categories and Spot the Jokers</p>
         </div>
         <div class="text-[0.6em] space-y-[0.5em] p-[0.5em]">
-            {#if doneCards?.length > 0}
+            <!-- {#if doneCards?.length > 0} -->
                 <div 
                 class="space-y-[0.5em]">
                     {#each doneCards as row, i}
                         <div 
+                        transition:scale={{start:0.5,duration:700, delay:100}}
                         class="
                         {i+1 == 1 ? 'bg-box-1' : i+1 == 2 ? 'bg-box-2' :  i+1 == 3 ? 'bg-box-3' : "bg-black text-white" }
                         relative text-center rounded-[0.5em] pt-[0.9em] pb-[0.9em]">
@@ -200,12 +293,14 @@
                         </div>
                     {/each}
                 </div>
-            {/if}
+            <!-- {/if} -->
             {#each shoeCardsData as row, i}
-                <div class="relative space-y-[0.5em]">
+                <div  class="relative space-y-[0.5em]">
                     <div class="grid grid-cols-2 xsm:grid-cols-4 gap-[0.5em]">
-                        {#each row as cell, j}
+                        {#each row as cell, j (cell)}
                             <button
+                                out:scale
+                                animate:flip={{delay: (j+1) * 10}}
                                 on:click={() => {
                                     if (currentGroup.includes(cell)) {
                                         currentGroup = currentGroup.filter(
@@ -216,7 +311,8 @@
                                     }
                                 }}
                                 class:activeGroup={currentGroup.includes(cell)}
-                                class="transition-colors focus-within:outline-none text-[0.9em] bg-[#F2F6EF] rounded-[0.5em] w-full text-center aspect-[3/1.4]"
+                                class:shakeGroup={currentGroup.includes(cell) && showShake}
+                                class=" cardsButton transition-colors focus-within:outline-none text-[0.9em] bg-[#F2F6EF] rounded-[0.5em] w-full text-center aspect-[3/1.4]"
                             >
                                 {cell}
                             </button>
@@ -228,19 +324,19 @@
         <div class="flex justify-center gap-0hem mt-1em">
             <button
                 on:click={()=> shuffleTangleData(shoeCardsData) }
-                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                class="monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
             >
                 <p class="text-[0.55em] capitalize">shuffle</p>
             </button>
             <button
                 on:click={deselectAll}
-                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                class="monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
             >
                 <p class="text-[0.55em] capitalize">deselect all</p>
             </button>
             <button
                 on:click={()=> checkMatch(currentGroup, initialTangle)}
-                class="cursor-pointer border bg-black text-white border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                class="monotonButton cursor-pointer border bg-black text-white border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
             >
                 <p class="text-[0.55em] capitalize">submit</p>
             </button>

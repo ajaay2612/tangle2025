@@ -16,7 +16,7 @@
     <div class="space-y-[0.6em]">
         <div class="flex justify-center gap-[0.6em]">
             <button on:click={()=>{}}
-            class="cursor-pointer rounded-[0.66em] bg-tert w-[6em] gap-[0.45em] flex flex-col justify-center items-center aspect-[1] ">
+            class="tanButton cursor-pointer rounded-[0.66em] bg-tert w-[6em] gap-[0.45em] flex flex-col justify-center items-center aspect-[1] ">
                 
                 <div class="w-[2em]">
                     <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +27,7 @@
                 <p class="text-[0.9em]">play</p>
             </button>
             <button on:click={()=>$CurrentFrame = "create"}
-            class="cursor-pointer rounded-[0.66em] bg-[#ffffff] border-2 border-tert w-[6em] gap-[0.45em] flex flex-col justify-center items-center aspect-[1] ">
+            class="tanButton cursor-pointer rounded-[0.66em] bg-[#ffffff] border-2 border-tert w-[6em] gap-[0.45em] flex flex-col justify-center items-center aspect-[1] ">
                 
                 <div class="w-[2em]">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
         </div>
         
         <button on:click={()=>{}}
-        class="cursor-pointer w-full py-[0.5em] rounded-[0.66em] bg-[#ffffff] border-2 border-tert">
+        class="tanButton cursor-pointer w-full py-[0.5em] rounded-[0.66em] bg-[#ffffff] border-2 border-tert">
             <p class="text-[0.9em]">How to play</p>
         </button>
     </div>

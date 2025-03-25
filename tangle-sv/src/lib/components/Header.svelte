@@ -21,14 +21,14 @@
 
         <div class="text-[0.9em] flex justify-center items-center gap-[0.5em]">
             <button on:click={()=>$CurrentFrame = "home"}
-            class="border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal">
+            class="monotonButton border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal">
                 <p class="text-[0.55em]">Back</p>
             </button>
 
             <button
             disabled={!$postData.canPost}
             on:click={handlePost}
-            class="border border-black disabled:opacity-50 bg-black text-white rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal">
+            class="monotonButton border border-black disabled:opacity-50 bg-black text-white rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal">
                 <p class="text-[0.55em]">Post</p>
             </button>
         </div>

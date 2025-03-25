@@ -110,13 +110,36 @@ body {
 }
 
 .tanButton{
-    @apply hover:scale-[1.02] transition-transform cursor-pointer hover:opacity-85;
+    @apply hover:scale-[1.12] duration-[200ms] transition-transform cursor-pointer hover:opacity-85;
+    transition-timing-function:cubic-bezier(.14,.1,.34,1.63);
+}
+
+.monotonButton{
+    @apply  transition-[font-weight] duration-300 hover:font-bold
+}
+
+.cardsButton{
+    @apply cursor-pointer hover:shadow hover:shadow-[#a2b9907c] hover:scale-[1.05] duration-[200ms] transition-[scale,box-shadow,background-color];
+    transition-timing-function:cubic-bezier(.14,.1,.34,1.63);
 }
 
 .activeGroup{
     @apply bg-[#000000] text-[#fff] ;
 }
 
+
+
 .activeRank{
     @apply bg-[#000000] text-[#fff] ;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30% { transform: translateX(-5px); }
+    20%, 40% { transform: translateX(5px); }
+    50% { transform: translateX(0); }
+}
+
+.shakeGroup {
+    animation: shake 0.5s ease-in-out;
 }

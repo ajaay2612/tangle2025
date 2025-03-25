@@ -16,13 +16,13 @@
 </script>
 
 
-<div class="z-[599] fixed top-0 left-0 px-1em w-full ">
+<div class="pointer-events-none z-[599] fixed top-0 left-0 px-1em w-full ">
     <div class="flex justify-between items-center  p-1em">
         <div class="text-[0.5em]"><Logo/></div>
 
         <!-- svelte-ignore a11y_consider_explicit_label -->
         <button on:click={toggleLeaderboard}
-        class="py-[0.4em] block tanButton">
+        class="pointer-events-auto py-[0.4em] block tanButton">
             <div class="w-[1.5em]">
                 <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="21" cy="21" r="21" fill="#C6FFA0"/>
@@ -40,8 +40,10 @@
 </div>
 
 {#if showLeaderboard}
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <button on:click|self={closeLeaderBoard} transition:fade={{duration:400, easing: cubicOut}} class="z-[10] h-screen backdrop-blur-[5px] absolute left-0 top-0 w-full bg-pickem-header-bg flex justify-center items-center">
-        <div transition:scale={{start:0.9, duration:400, easing: cubicOut}} class="w-full">
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <div on:click|self={closeLeaderBoard} transition:scale={{start:0.9, duration:400, easing: cubicOut}} class="w-full">
             <LeaderBoard bind:showLeaderboard={showLeaderboard}/>
         </div>
     </button>

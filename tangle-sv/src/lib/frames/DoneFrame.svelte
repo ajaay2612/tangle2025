@@ -46,10 +46,12 @@
 
 
     <div class="space-y-[0.8em] mt-1em w-full">
-        <div class="text-center   text-[0.62em]">
-            <p class="font-normal  font-montserrat-italic">Solved In </p>
-            <p class="font-medium font-montserrat ">{$PostData?.doneTime}</p>
-        </div>
+        {#if !$PostData?.isCreator}
+            <div class="text-center   text-[0.62em]">
+                <p class="font-normal  font-montserrat-italic">Solved In </p>
+                <p class="font-medium font-montserrat ">{$PostData?.doneTime}</p>
+            </div>
+        {/if}
         <div class="text-[0.6em] space-y-[0.5em] p-[0.5em]">
             {#if $PostData?.doneTangle?.length  > 0}
                 <div 
@@ -78,13 +80,13 @@
         <div class="flex justify-center gap-0hem mt-1em">
             <button
                 on:click={()=> $CurrentFrame = "create"}
-                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                class=" monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
                 >
                 <p class="text-[0.55em] capitalize">Create a Tangle</p>
             </button>
             <button
                 on:click={()=> {} }
-                class="cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
+                class=" monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
             >
                 <p class="text-[0.55em] capitalize">play another tangle</p>
             </button>

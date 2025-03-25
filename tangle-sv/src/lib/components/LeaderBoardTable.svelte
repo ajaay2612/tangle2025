@@ -17,20 +17,22 @@
 
 </script>
 
-<div class="w-[90%] h-[calc(85vh-4em)] mt-4em mx-auto text-[0.9em] xsm:text-[0.55em]  ">
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<div on:click|self={()=>showLeaderboard= false} class="w-[90%] h-[calc(85vh-4em)] mt-4em mx-auto text-[0.9em] xsm:text-[0.55em]  ">
         
     <div class="overflow-hidden bg-tert rounded-[0.3em] text-[1.38em] font-primary flex flex-col h-full justify-between">
         <div class="">
             <!-- svelte-ignore a11y_no_static_element_interactions -->
-            <div class="capitalize text-[1.45em] flex justify-center py-[0.3em] border-b items-center px-[1.4em] mb-[0.5em]">
+            <div class="relative capitalize text-[1.45em] flex justify-center py-[0.3em] border-b items-center px-[1.4em] mb-[0.5em]">
                 leaderBoard
                 <!-- svelte-ignore a11y_click_events_have_key_events -->
-                <!-- <div on:click={()=> showLeaderboard = false} class="cursor-pointer w-[1em]">
+                <div on:click={()=> showLeaderboard = false} class=" p-[0.5em] absolute top-[0.3em] right-[0.2em] cursor-pointer w-[1.5em]">
                     <svg viewBox="0 0 101 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8 8L93 93" stroke="black" stroke-width="22"/>
                         <path d="M8.00002 93L93 8" stroke="black" stroke-width="22"/>
                     </svg>
-                </div> -->
+                </div>
             </div>
 
 
