@@ -75,6 +75,94 @@ Devvit.addCustomPostType({
 
 
                             break;
+
+                        case 'playNext':
+
+                            console.log("play")
+                            // async function playNext() {
+
+                            async function playNext() {
+                                let allPostIds =  JSON.parse(await context.redis.get(`${ (await context.reddit.getCurrentSubreddit()).name}_postIds `) || "[]") || [];
+
+                                console.log(allPostIds)
+                            
+                                if(allPostIds && allPostIds.length > 0 ){
+
+                                    // Start from the last added post
+                                    let currentIndex = 0;
+                                    
+                                    // Check posts from the end until finding a post not by the current user
+                                    while (currentIndex <= allPostIds.length - 1) {
+                                        
+                                        const postData = await context.redis.get(`postData_${allPostIds[currentIndex].postId}_${username}`);
+                                        const parsedGameData = postData ? JSON.parse(postData) : {};
+
+                                        let postDataTangle = parsedGameData
+
+                                        console.log(postDataTangle)
+
+                                        if (allPostIds[currentIndex].creator !== username && !postDataTangle?.doneTime) {
+                                            // return allPostIds[currentIndex];
+                                            // console.log(allPostIds[currentIndex].postId)
+                                            context.ui.navigateTo(allPostIds[currentIndex].postUrl);  
+                                        }
+                                        currentIndex++;
+                                    }
+
+                                }else{
+                                    context.ui.showToast('No Game Found');
+                                }
+
+                            }
+
+                            await playNext()
+                            
+
+
+                            //     try {
+                            //         // Get the current subreddit name
+                            //         const subredditName = (await context.reddit.getCurrentSubreddit()).name;
+                                    
+                            //         // Fetch the post IDs for the current subreddit
+                            //         const allPostIds = JSON.parse(await context.redis.get(`${subredditName}_postIds`) || "[]");
+                                    
+                            //         // If no posts exist, return early
+                            //         if (allPostIds.length === 0) {
+                            //             return null;
+                            //         }
+
+                            //         console.log(allPostIds)
+                            //         return allPostIds[0]
+                            //         // // Start from the last added post
+                            //         // let currentIndex = allPostIds.length - 1;
+                                    
+                            //         // // Check posts from the end until finding a post not by the current user
+                            //         // while (currentIndex >= 0) {
+                            //         //     if (allPostIds[currentIndex].creator !== username) {
+                            //         //         return allPostIds[currentIndex];
+                            //         //     }
+                            //         //     currentIndex--;
+                            //         // }
+                                    
+                            //         // If all posts are by the current user, return null
+                            //         return null;
+                            //     } catch (error) {
+                            //         console.error("Error in playNext:", error);
+                            //         return null;
+                            //     }
+                            // }
+                        
+                            // let nextPostData = await playNext()
+
+                            // console.log(nextPostData)
+
+                            // if(nextPostData){
+                            //     context.ui.navigateTo(nextPostData.postUrl);   
+                            // }else{
+                            //     context.ui.showToast('No Game Found');
+                            // }
+
+                            break;
                         
                         case 'setPostData':
                             // Post the app with the new data
@@ -91,8 +179,17 @@ Devvit.addCustomPostType({
                                 creator_username: username,
                                 allPostData : message?.data?.postdata,
                             };
+
                             await context.redis.set(`postData_${newPost.id}`, JSON.stringify(postData));
-    
+
+                            
+                            let allPostIds =  JSON.parse(await context.redis.get(`${ (await context.reddit.getCurrentSubreddit()).name}_postIds `) || "[]") || [];
+                            
+                            allPostIds = [...allPostIds, {creator:username, postId :newPost.id, postUrl :newPost.url }]
+
+                            await context.redis.set(`${ (await context.reddit.getCurrentSubreddit()).name}_postIds `, JSON.stringify(allPostIds));
+                            console.log(allPostIds)
+
                             const postUrl = newPost.url;
                             webView.postMessage({
                                 type: 'newPostCreated',

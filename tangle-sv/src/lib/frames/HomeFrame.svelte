@@ -1,12 +1,37 @@
 <script>
     import CurrentFrame from "$lib/stores/CurrentFrame";
+    import { fade, scale } from "svelte/transition";
     import Logo from "../components/Logo.svelte";
     let allButtons = [
         {name: 'create', to: 'create'},
         {name: 'How To Play', to: 'howToPlay'},
     ]
 
+    let showHowToPlay
+
+
+    function playNext(){
+        window.parent.postMessage({
+            type: 'playNext'
+        }, '*');
+    }
+
+
 </script>
+
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+{#if showHowToPlay}
+    <div transition:fade on:click={()=> showHowToPlay = false} class="fixed z-10 w-full h-screen flex justify-center items-center">
+        <div transition:scale={{start:0.7}} class="space-y-[1.2em] text-[0.85em] p-[1.8em]  bg-tert w-[90%] h-auto">
+            <p>You’ll see 16 words on the screen. Your goal is to group 12 of them into three categories of four words each. But watch out, <span class="text-[#E30000]">four Joker words</span> don’t fit into any category!</p>
+        
+            <p>Tap on four words that belong together. If you're correct, the category locks in. Keep going until you’ve found all three categories. Your time is recorded, so solve it as quickly as you can!</p>
+        
+            <p>Find the connections, avoid the Jokers, and untangle the puzzle!</p>
+        </div>
+    </div>
+{/if}
 
 <div class="text-[0.95em] flex flex-col justify-center gap-2em items-center">
     <div class="space-y-[0.4em]">
@@ -15,7 +40,7 @@
     </div>
     <div class="space-y-[0.6em]">
         <div class="flex justify-center gap-[0.6em]">
-            <button on:click={()=>{}}
+            <button on:click={playNext}
             class="tanButton cursor-pointer rounded-[0.66em] bg-tert w-[6em] gap-[0.45em] flex flex-col justify-center items-center aspect-[1] ">
                 
                 <div class="w-[2em]">
@@ -40,7 +65,7 @@
             </button>
         </div>
         
-        <button on:click={()=>{}}
+        <button on:click={()=>{showHowToPlay = true}}
         class="tanButton cursor-pointer w-full py-[0.5em] rounded-[0.66em] bg-[#ffffff] border-2 border-tert">
             <p class="text-[0.9em]">How to play</p>
         </button>

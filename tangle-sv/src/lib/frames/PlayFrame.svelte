@@ -67,7 +67,7 @@
                     message = { text:"Yayy!! You have matched all groups, and found the jokers.", success: true }
                     setTimeout(() => {
                         message = { text: "", success: true }
-                    }, 5000);
+                    }, 2500);
                 }else{
                     message = { text: getRandomMessage(true), success: true }
                     setTimeout(() => {
@@ -113,7 +113,7 @@
 
                     setTimeout(() => {
                         $CurrentFrame = "done";
-                    }, 5000);
+                    }, 3000);
                 }  
             }, 500);
 

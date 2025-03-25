@@ -4,7 +4,11 @@
     import PostData from "$lib/stores/PostData";
 
 
-
+    function playNext(){
+        window.parent.postMessage({
+            type: 'playNext'
+        }, '*');
+    }
 
   
 </script>
@@ -46,7 +50,7 @@
 
 
     <div class="space-y-[0.8em] mt-1em w-full">
-        {#if !$PostData?.isCreator}
+        {#if !$PostData.isCreator}
             <div class="text-center   text-[0.62em]">
                 <p class="font-normal  font-montserrat-italic">Solved In </p>
                 <p class="font-medium font-montserrat ">{$PostData?.doneTime}</p>
@@ -85,7 +89,7 @@
                 <p class="text-[0.55em] capitalize">Create a Tangle</p>
             </button>
             <button
-                on:click={()=> {} }
+                on:click={playNext}
                 class=" monotonButton cursor-pointer border border-black rounded-full py-[0.2em] px-[1.18em] block font-montserrat font-normal"
             >
                 <p class="text-[0.55em] capitalize">play another tangle</p>

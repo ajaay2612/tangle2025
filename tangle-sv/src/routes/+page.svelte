@@ -44,7 +44,7 @@
                     if (message?.data?.isCreator) {
                         $CurrentFrame = "done" 
                         $General.mode = "done";
-
+                        $PostData.isCreator= true
                         $PostData.doneTangle = $PostData?.tangle;
                     }else{
                         $CurrentFrame = "play" 
