@@ -1,5 +1,5 @@
 <script>
-    import Header from "$lib/components/Header.svelte";
+    import HeaderPlay from "$lib/components/HeaderPlay.svelte";
     import CurrentFrame from "$lib/stores/CurrentFrame";
     import PostData from "$lib/stores/PostData";
 
@@ -57,11 +57,19 @@
 
             setTimeout(() => {
                 if(shoeCardsData.length === 1){
+                    stopTimer()
                     doneCards = [...doneCards, {data: shoeCardsData[0], title: "joker"}];
                     removeMatchedGroupFromShoeCards(shoeCardsData[0]);
                     alert("You have matched all groups");
                     $PostData.doneTangle = doneCards;
                     console.log(JSON.stringify(doneCards));
+                    $PostData.doneTime = formatTime(totalTime);                    
+
+                    window.parent.postMessage({
+                        type: 'setUserPostData',
+                        data: { tangle: $PostData.doneTangle, doneTime: formatTime(totalTime) }
+                    }, '*');
+
                     $CurrentFrame = "done";
                 }  
             }, 500);
@@ -110,13 +118,59 @@
     });
 
 
+
+    // timer
+
+    let timer = 0;
+    let timerInterval;
+    let isTimerRunning = false;
+    let totalTime
+    function startTimer() {
+        if (!isTimerRunning) {
+            isTimerRunning = true;
+            timerInterval = setInterval(() => {
+                timer += 1;
+            }, 1000);
+        }
+    }
+
+    function stopTimer() {
+        if (isTimerRunning) {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            
+            // Store or process the total time
+            totalTime = timer;
+            
+        }
+    }
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    }
+
+    onMount(() => {
+        initialTangle = $PostData.tangle;
+        shuffleTangleData(initialTangle, true);
+        startTimer(); // Start timer when component mounts
+    });
   
 </script>
 
-<Header />
+<HeaderPlay />
+
+
+
 <div
     class="w-[85%] h-[calc(100%-4.5em)] pb-2em mt-[4.5em] overflow-auto mx-auto"
 >
+
+    <div class="flex justify-center mb-4">
+        <p class="text-2xl font-bold">{formatTime(timer)}</p>
+    </div>
+
     <!-- <div class="space-y-[0.5em]">
         {#each tangle as row, i}
 

@@ -1,5 +1,5 @@
 <script>
-    import Header from "$lib/components/Header.svelte";
+    import HeaderDone from "$lib/components/HeaderDone.svelte";
     import CurrentFrame from "$lib/stores/CurrentFrame";
     import PostData from "$lib/stores/PostData";
 
@@ -9,11 +9,16 @@
   
 </script>
 
-<Header />
+<HeaderDone />
 <div
     class="w-[85%] h-[calc(100%-4.5em)] pb-2em mt-[4.5em] overflow-auto mx-auto"
 >
     <div class="space-y-[0.5em] p-[0.5em]">
+
+        <div class="flex justify-center mb-4">
+            <p class="text-2xl font-bold">{$PostData?.doneTime}</p>
+        </div>
+
         {#if $PostData?.doneTangle?.length > 0}
             <div class="bg-red-100 space-y-[0.5em] p-[0.5em]">               
                 {#each $PostData?.doneTangle as row, i}
