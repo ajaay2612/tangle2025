@@ -22,7 +22,7 @@
 
         <!-- svelte-ignore a11y_consider_explicit_label -->
         <button on:click={toggleLeaderboard}
-        class="pointer-events-auto py-[0.4em] block tanButton">
+        class="text-[1.2em] pointer-events-auto py-[0.4em] block tanButton">
             <div class="w-[1.5em]">
                 <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="21" cy="21" r="21" fill="#C6FFA0"/>
