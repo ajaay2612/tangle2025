@@ -53,11 +53,13 @@
                         if (message?.data?.parsedDoneGame?.doneTangle && message?.data?.parsedDoneGame?.doneTangle?.length > 0){
                             $PostData.doneTangle = message?.data?.parsedDoneGame?.doneTangle;
                             $PostData.doneTime = message?.data?.parsedDoneGame?.doneTime;
-                            $LeaderBoard = message?.data?.parsedLeaderBoard || [];
                             $CurrentFrame = "done" 
                             $General.mode = "done";
                         }
                     }
+
+                    $LeaderBoard = message?.data?.parsedLeaderBoard || [];
+
                 } 
                     
                     
