@@ -141,9 +141,9 @@
 
 
 
-<pre class="text-[0.8em] bg-gray-200 text-black p-0hem rounded overflow-auto max-h-[15em]">
+<!-- <pre class="text-[0.8em] bg-gray-200 text-black p-0hem rounded overflow-auto max-h-[15em]">
     output: 
     {messageOutput}
-</pre>
+</pre> -->
 
 

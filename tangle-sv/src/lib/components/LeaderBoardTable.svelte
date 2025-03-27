@@ -50,7 +50,7 @@
                     </div>
                 {/each}
             {:else}
-                <div class=" flex border-t border-pickem-main-bg justify-between px-[1.5em] py-[0.5em]">
+                <div class=" flex justify-between px-[1.5em] py-[0.5em]">
                     <h2 class="text-center w-full">
                         
                         
