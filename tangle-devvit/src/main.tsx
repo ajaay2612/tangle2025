@@ -100,7 +100,7 @@ Devvit.addCustomPostType({
 
                                 // Start from the last added post
                                 let currentIndex = 0;
-
+                                let foundNavigatablePost = false;
                                 // Check posts from the end until finding a post not by the current user
                                 while (currentIndex <= allPostIds.length - 1) {
 
@@ -128,11 +128,16 @@ Devvit.addCustomPostType({
                                         // return allPostIds[currentIndex];
                                         // console.log(allPostIds[currentIndex].postId)
                                         context.ui.navigateTo(allPostIds[currentIndex].postUrl);
+                                        foundNavigatablePost = true;
                                         break;
                                     }
                                     currentIndex++;
                                 }
-                                context.ui.showToast('No Game Found');
+
+                                if (!foundNavigatablePost) {
+                                    context.ui.showToast('No Game Found');
+                                }
+                                
                             } else {
                                 context.ui.showToast('No Game Found');
                             }
@@ -281,9 +286,9 @@ Devvit.addCustomPostType({
                         throw new Error(`Unknown message type: ${message satisfies never}`);
                 }
             },
-            onUnmount() {
-                context.ui.showToast('Web view closed!');
-            },
+            // onUnmount() {
+            //     context.ui.showToast('Web view closed!');
+            // },
         });
 
         // Render the custom post type
