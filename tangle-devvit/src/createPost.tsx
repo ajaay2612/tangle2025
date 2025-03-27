@@ -2,7 +2,7 @@ import { Devvit } from '@devvit/public-api';
 
 // Adds a new menu item to the subreddit allowing to create a new post
 Devvit.addMenuItem({
-  label: 'Create New Tangle (with Web View)',
+  label: 'Create New Tangle',
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui } = context;
