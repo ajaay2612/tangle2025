@@ -132,7 +132,7 @@ Devvit.addCustomPostType({
                                     }
                                     currentIndex++;
                                 }
-
+                                context.ui.showToast('No Game Found');
                             } else {
                                 context.ui.showToast('No Game Found');
                             }
