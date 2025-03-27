@@ -94,7 +94,7 @@ Devvit.addCustomPostType({
                         async function playNext() {
                             let allPostIds = JSON.parse(await context.redis.get(`${(await context.reddit.getCurrentSubreddit()).name}_postIds `) || "[]") || [];
 
-                            console.log(allPostIds)
+                            // console.log(allPostIds)
 
                             if (allPostIds && allPostIds.length > 0) {
 
@@ -106,15 +106,29 @@ Devvit.addCustomPostType({
 
                                     const postData = await context.redis.get(`postData_${allPostIds[currentIndex].postId}_${username}`);
                                     const parsedGameData = postData ? JSON.parse(postData) : {};
+                                    
+                                    let post = true;
+                                    
+
+                                    try {
+                                        // Fetch the post to check its status
+                                        let postInfo = await context.reddit.getPostById(allPostIds[currentIndex].postId);
+                                        post = !postInfo.isRemoved()
+                                    } catch (error) {
+                                        post = false;
+                                        console.log(`Error checking post ${allPostIds[currentIndex].postId}: ${error}`);
+                                    }
+                                    // console.log(post)
 
                                     let postDataTangle = parsedGameData
 
                                     console.log(postDataTangle)
 
-                                    if (allPostIds[currentIndex].creator !== username && !postDataTangle?.doneTime) {
+                                    if (allPostIds[currentIndex].creator !== username && !postDataTangle?.doneTime && post) {
                                         // return allPostIds[currentIndex];
                                         // console.log(allPostIds[currentIndex].postId)
                                         context.ui.navigateTo(allPostIds[currentIndex].postUrl);
+                                        break;
                                     }
                                     currentIndex++;
                                 }
